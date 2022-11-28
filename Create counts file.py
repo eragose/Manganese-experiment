@@ -2,7 +2,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 folderin = "C:/Users/eriko/Desktop´/Eksperimentiel 3 ø1/"
-folderout = "Dag 1/"
+folderout = "Kali/"
 
 
 def getCounts(data, lc: int = 1, hc: int = 3500):
@@ -23,4 +23,4 @@ def getCounts(data, lc: int = 1, hc: int = 3500):
 
 ra = np.loadtxt("C:/Users/eriko/Desktop/Eksperimentiel 3 ø1/ra_cali2_4.8_ch000.txt", skiprows=4)
 print("loaded")
-np.savetxt(folderout+'ra_4.8_counts', getCounts(ra))
+np.savetxt(folderout+'ra_4.8_counts.txt', getCounts(ra), delimiter=" ", fmt='%s')

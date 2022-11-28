@@ -110,11 +110,11 @@ def funlin(x, a, b):
 pinit = [1,1]
 xhelp = np.linspace(0, 3400, 500)
 popt, pcov = curve_fit(funlin, x, y, p0=pinit, sigma=yler, absolute_sigma=True)
-print("energy fit")
+print("\n energy fit")
 print('a hældning:', popt[0])
 print('b forskydning:', popt[1])
 perr = np.sqrt(np.diag(pcov))
-print('usikkerheder:', perr)
+print('usikkerheder:', perr, "\n")
 
 #print(x)
 chmin = np.sum(((y - funlin(x, *popt)) / yler) ** 2)
