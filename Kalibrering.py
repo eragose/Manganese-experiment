@@ -8,6 +8,8 @@ skip = 5               #For filer i Xray mappe brug 38 ellers 12
 stop = 4108             #For filer i Xray mappe brug 4134 eller 4108
 folder = 'Kali'
 
+#plt.rcParams['figure.format'] = 'svg'
+
 names = glob.glob(os.path.join(folder,'*.txt'))
 files = []
 for i in names[0:]:
@@ -50,6 +52,6 @@ def peaks(data, height):
 
 prom = [0, 100, 0]     #0 betyder den ikke er bestemt
 
-plot_data(ch_count)
+#plot_data(ch_count)
 print(ch_count[0][1][4094])
-plt.show()
+plt.show(format='svg')
