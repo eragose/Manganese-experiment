@@ -57,5 +57,24 @@ data = np.transpose(data)
 data, Ee = converttoenergy(data)
 data = data[np.where(data[:,0]>1)]
 data = data[np.where(data[:,0]<5000)]
-plt.plot(data[:,0], data[:,1])
-plt.show()
+#plt.plot(data[:,0], data[:,1])
+#plt.show()
+
+chs = []
+chs += [getChannel("Ra E=186", data,186-100, 186+100, [186, 10, 1000])]
+chs += [getChannel("Ra E=241", data,241-100, 241+100, [241, 10, 1000])]
+chs += [getChannel("Ra E=295", data, 295-100, 295+100, [295, 10, 8000])]
+chs += [getChannel("Ra E=351", data, 351-100, 351+100, [351, 10, 8000])]
+chs += [getChannel("Ra E=609", data, 609-100, 609+100, [609, 10, 8000])]
+chs += [getChannel("Ra E=768", data, 768-100, 768+100, [768, 10, 1000])]
+chs += [getChannel("Ra E=934", data, 934-100, 934+100, [934, 10, 500])]
+chs += [getChannel("Ra E=1120", data, 1120-100, 1120+100, [1120, 10, 1000])]
+chs += [getChannel("Ra E=1238", data, 1238-100, 1238+100, [1238, 10, 200])]
+chs += [getChannel("Ra E=1377", data, 1337-100, 1337+100, [1377, 10, 200])]
+chs += [getChannel("Ra E=1407", data, 1407-100, 1407+100, [1407, 10, 200])]
+chs += [getChannel("Ra E=1729", data, 1729-100, 1729+100, [1729, 10, 200])]
+chs += [getChannel("Ra E=1764", data, 1764-100, 1764+100, [1764, 10, 200])]
+chs += [getChannel("Ra E=1847", data, 1847-100, 1847+100, [1847, 10, 100])]
+chs += [getChannel("Ra E=2118", data, 2118-100, 2118+100, [2118, 10, 200])]
+chs += [getChannel("Ra E=2204", data, 2204-100, 2204+100, [2204, 10, 200])]
+chs += [getChannel("Ra E=2447", data, 2447-100, 2447+100, [2447, 10, 200])]
