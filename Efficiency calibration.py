@@ -24,7 +24,7 @@ def converttoenergy(dat):
         else:
             newDat = np.append(newDat, [[a*dat[j, 0]+b, dat[j, 1]]], axis=0)
 
-    Ee = [np.sqrt((ae*dat[:,0])**2 + be**2)]
+    Ee = np.sqrt((ae*dat[:,0])**2 + be**2)
     return newDat, Ee
 
 data = np.transpose(data)
