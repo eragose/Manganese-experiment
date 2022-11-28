@@ -17,6 +17,8 @@ for i in range(5):
     
         # extracting all the files
         zip.extractall()
+        
+        print('Done!')
 
 
 data = []
