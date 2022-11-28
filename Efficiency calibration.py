@@ -27,8 +27,19 @@ def converttoenergy(dat):
     Ee = [np.sqrt((ae*dat[:,0])**2 + be**2)]
     return newDat, Ee
 
+def ch_to_e(data):
+    a = 0.73971712
+    ae = 9.9e-7
+    b = 0.3785
+    be = 1.4e-3
+    e = data.T[:,0]*a + b
+    err = np.sqrt((ae*data.T[:,0])**2 + be**2)
+    return e, err
+print(ch_to_e(data)[0])
+
 data = np.transpose(data)
 data, Ee = converttoenergy(data)
+print(data)
 data = data[np.where(data[:,0]>1)]
 data = data[np.where(data[:,0]<5000)]
 plt.plot(data[:,0], data[:,1])
