@@ -32,7 +32,7 @@ def getCounts(name: str, lc: int = 20, hc: int = 6000):
     y = y[lI:hI]
     plt.plot(x, y)
     plt.title(name)
-    plt.show()
+    #plt.show()
     return (x, y)
 
 
@@ -122,7 +122,7 @@ print('chi2:', chmin, ' ---> p:', ss.chi2.cdf(chmin, 4))
 plt.scatter(x, y, label="data")
 plt.plot(xhelp, funlin(xhelp, *popt), label="fit")
 plt.legend()
-plt.show()
+#plt.show()
 
 print("xler: ", xler)
 
