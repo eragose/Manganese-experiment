@@ -21,9 +21,9 @@ def getCounts(data, lc: int = 1, hc: int = 3500):
 
 
 
-ra = np.loadtxt(folderin +"KaliCo_ch000.txt", skiprows=5)
+ra = np.loadtxt('C:/Users/Erik/OneDrive/Skrivebord/Eksperimentiel 3 ø1/Mg_1_maalning_dag2_ch000.txt', skiprows=4)
 #ra = np.transpose(ra)
 print("loaded")
 print(ra[0])
 print(ra[-1])
-np.savetxt(folderout+'test.txt', getCounts(ra), delimiter=" ", fmt='%s')
+np.savetxt(folderout+'manganese1 all counts.txt', getCounts(ra), delimiter=" ", fmt='%s')
