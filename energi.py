@@ -8,18 +8,18 @@ from scipy.optimize import curve_fit
 from zipfile import ZipFile
 
 
-  
-# specifying the zip file name
-# for i in range(5):
-#     file_name = f'Dag 2/Mg_data/Mg_1_maalning_dag2_ch000{i}.zip'
-    
-#     # opening the zip file in READ mode
-#     with ZipFile(file_name, 'r') as zip:
-#         # printing all the contents of the zip file
-#         zip.printdir()
-    
-#         # extracting all the files
-#         zip.extractall()
+
+#specifying the zip file name
+#for i in range(5):
+#    file_name = f'Dag 2/Mg_data/Mg_1_maalning_dag2_ch000{i}.zip'
+
+    # opening the zip file in READ mode
+#    with ZipFile(file_name, 'r') as zip:
+        # printing all the contents of the zip file
+#        zip.printdir()
+
+        # extracting all the files
+#        zip.extractall()
 
 a = 0.73971712
 ae = 9.9e-7
@@ -36,6 +36,7 @@ def getCounts(i, lc: int = 20, hc: int = 6000):
     counts = data[:, 1]
     (x, y) = np.unique(counts, return_counts=True)
     lI = np.where(x >= lc)[0][0]
+    #print(lI)
     hI = np.where(x >= hc)[0][0]
     x = x[lI:hI]
     y = y[lI:hI]
@@ -57,17 +58,18 @@ plt.vlines(line, 0, 10000, colors='b', linestyles='dashed')
 
 
 
-Mg1 = getCounts(0)
-Mg2 = getCounts(1)
-Mg3 = getCounts(2)
-Mg4 = getCounts(3)
-Mg5 = getCounts(4)
+Mg1 = np.array(getCounts(0))
+Mg2 = np.array(getCounts(1))
+Mg3 = np.array(getCounts(2))
+Mg4 = np.array(getCounts(3))
+Mg5 = np.array(getCounts(4))
 
 
-Mg = Mg1 + Mg2 + Mg3 + Mg4 + Mg5
+Mg = Mg1[1] + Mg2[1] + Mg3[1] + Mg4[1] + Mg5[1]
+print(Mg[0])
 
-plt.plot(Mg[0][800:], Mg[1][800:])
-plt.show()
+#plt.plot(Mg[0][800:], Mg[1][800:])
+#plt.show()
 
 plt.vlines(Line, 0, 10000, colors='r', linestyles='dashed')
 plt.vlines(line, 0, 10000, colors='b', linestyles='dashed')
@@ -86,8 +88,10 @@ def gaussFit(x, mu, sig, a, b, c):
 
 
 def getChannel(name: str, data: tuple, lower_limit: int, upper_limit: int, guess: [int, int, int], guess2 = [0,0]):
-    x = data[0][lower_limit:upper_limit]
-    y = data[1][lower_limit:upper_limit]
+    ll = np.where(data[:, 0] > lower_limit)[0][0]
+    ul = np.where(data[:, 0] > upper_limit)[0][0]
+    x = data[:, 0][ll:ul]
+    y = data[:, 1][ll:ul]
     yler = np.sqrt(y)
     pinit = guess + guess2
     xhelp = np.linspace(lower_limit, upper_limit, 500)
@@ -116,7 +120,7 @@ def getChannel(name: str, data: tuple, lower_limit: int, upper_limit: int, guess
     # return int(x*a + b)
     # 
 chs = []
-chs += [getChannel("Mg E=846.77", Mg,  700, 900, [850, 10, 200])]
+#chs += [getChannel("Mg E=846.77", Mg,  700, 900, [850, 10, 200])]
 # chs += [getChannel("Mg E=2085.0", Mg, 1400, 1700, [1580, 10, 200])]
 # chs += [getChannel("Mg E=1238.27", Mg, 1700, 1900, [1800, 10, 200])]
 # chs += [getChannel("Mg E=2657.54", Mg, 150, 350, [250, 10, 1000])]

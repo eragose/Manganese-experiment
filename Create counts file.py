@@ -1,7 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
-folderin = "C:/Users/eriko/Desktop´/Eksperimentiel 3 ø1/"
+folderin = "Kali/"
 folderout = "Kali/"
 
 
@@ -21,8 +21,9 @@ def getCounts(data, lc: int = 1, hc: int = 3500):
 
 
 
-ra = np.loadtxt("C:/Users/eriko/Desktop/Eksperimentiel 3 ø1/ra_cali2_4.8_ch000.txt", skiprows=4)
+ra = np.loadtxt(folderin +"KaliCo_ch000.txt", skiprows=5)
+#ra = np.transpose(ra)
 print("loaded")
 print(ra[0])
 print(ra[-1])
-#np.savetxt(folderout+'ra_4.8_counts.txt', getCounts(ra), delimiter=" ", fmt='%s')
+np.savetxt(folderout+'test.txt', getCounts(ra), delimiter=" ", fmt='%s')
