@@ -26,9 +26,9 @@ ae = 9.9e-7
 b = 0.3785
 be = 1.4e-3
 
-data = []
-for i in range(5):
-    data.append(np.loadtxt(f'Mg_1_maalning_dag2_ch000{i}.txt')[1])
+#data = []
+#for i in range(5):
+#    data.append(np.loadtxt(f'Mg_1_maalning_dag2_ch000{i}.txt')[1])
 
 def getCounts(i, lc: int = 20, hc: int = 6000):
     print('File:', str(i))
