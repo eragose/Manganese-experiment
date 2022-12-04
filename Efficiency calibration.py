@@ -52,7 +52,6 @@ def getChannel(name: str, data: tuple, lower_limit: int, upper_limit: int, guess
     print('usikkerheder:', perr)
     chmin = np.sum(((y - gaussFit(x, *popt)) / yler) ** 2)
     print('chi2:', chmin, ' ---> p:', ss.chi2.cdf(chmin, 4), '\n')
-
     #plt.plot(x, y, color="r", label="data")
     #plt.plot(xhelp, gaussFit(xhelp, *popt), 'k-.', label="gaussfit")
     #plt.legend()
@@ -81,7 +80,7 @@ chs += [getChannel("Ra E=934", data, 934-100, 934+100, [934, 5, 1200])]
 chs += [getChannel("Ra E=1120", data, 1120-100, 1120+100, [1120, 5, 1000])]
 chs += [getChannel("Ra E=1238", data, 1238-100, 1238+100, [1238, 6.1, 310])]
 chs += [getChannel("Ra E=1377", data, 1377-100, 1377+100, [1377, 7.16413, 3500], [-0.0539055, -8.036607])]
-chs += [getChannel("Ra E=1764", data, 1764-100, 1764+100, [1764, 7.8658, 489], [0.09, -248])]
+chs += [getChannel("Ra E=1764", data, 1764-100, 1764+100, [1764, 7.8658, 7000], [0.09, -248])]
 chs += [getChannel("Ra E=2204", data, 2204-100, 2204+100, [2204, 10, 100])]
 chs += [getChannel("Ra E=2447", data, 2447-100, 2447+100, [2447, 11, 20])]
 chs = np.array(chs)

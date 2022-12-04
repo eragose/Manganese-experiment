@@ -68,8 +68,8 @@ Mg5 = np.array(getCounts(4))
 Mg = Mg1[1] + Mg2[1] + Mg3[1] + Mg4[1] + Mg5[1]
 print(Mg[0])
 
-#plt.plot(Mg[0][800:], Mg[1][800:])
-#plt.show()
+plt.plot(Mg[0][800:], Mg[1][800:])
+plt.show()
 
 plt.vlines(Line, 0, 10000, colors='r', linestyles='dashed')
 plt.vlines(line, 0, 10000, colors='b', linestyles='dashed')
@@ -120,7 +120,7 @@ def getChannel(name: str, data: tuple, lower_limit: int, upper_limit: int, guess
     # return int(x*a + b)
     # 
 chs = []
-#chs += [getChannel("Mg E=846.77", Mg,  700, 900, [850, 10, 200])]
+chs += [getChannel("Mg E=846.77", Mg1,  700, 900, [850, 10, 200])]
 # chs += [getChannel("Mg E=2085.0", Mg, 1400, 1700, [1580, 10, 200])]
 # chs += [getChannel("Mg E=1238.27", Mg, 1700, 1900, [1800, 10, 200])]
 # chs += [getChannel("Mg E=2657.54", Mg, 150, 350, [250, 10, 1000])]
