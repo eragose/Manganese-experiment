@@ -32,7 +32,13 @@ def getCounts(name: str, lc: int = 20, hc: int = 6000):
     y = y[lI:hI]
     plt.plot(x, y)
     plt.title(name)
-    #plt.show()
+    a = 0.73971712
+    ae = 9.9e-7
+    b = 0.3785
+    be = 1.4e-3
+    Line = (186-b)/a
+    plt.vlines(Line, 0, 100, colors='r', linestyles='dashed')
+    plt.show()
     return (x, y)
 
 
