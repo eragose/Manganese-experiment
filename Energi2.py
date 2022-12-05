@@ -16,26 +16,7 @@ def chtoen(data):
 
 
 data, errEnergy = chtoen(data)
-
-
-def getCounts(i, lc: int = 20, hc: int = 6000):
-    print('File:', str(i))
-    data = np.loadtxt(f"Mg_1_maalning_dag2_ch000{i}.txt")
-    counts = data[:, 1]
-    (x, y) = np.unique(counts, return_counts=True)
-    lI = np.where(x >= lc)[0][0]
-    # print(lI)
-    hI = np.where(x >= hc)[0][0]
-    x = x[lI:hI]
-    y = y[lI:hI]
-
-    a = 0.73971712
-    ae = 9.9e-7
-    b = 0.3785
-    be = 1.4e-3
-    x = x * a + b
-
-    return (x, y)
+data = np.transpose(data)
 
 
 Line = [3445.279, 3369.91, 3122.908, 2959.935, 2657.547, 2085.064, 846.77]
