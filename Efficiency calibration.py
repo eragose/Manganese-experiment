@@ -151,4 +151,9 @@ xhelp = np.linspace(chs[0][0][0], 2500, 100)
 plt.plot(xhelp, reciproc(xhelp, *popt1), label='reciprocal function fit')
 plt.show()
 
-
+#efficiency fit
+#a : 180.66341379895778
+#b : 0.034598909761420625
+#usikkerheder: [6.52763544e+00 5.95806196e-03]
+#chi2: 0.9835314632319033  ---> p: 0.08771720843876844
+#Reciproc: a/x+b
