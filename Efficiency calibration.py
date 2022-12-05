@@ -42,7 +42,7 @@ def getChannel(name: str, data: tuple, lower_limit: int, upper_limit: int, guess
     yler = np.sqrt(y)
     pinit = guess + guess2
     xhelp = np.linspace(lower_limit, upper_limit, 500)
-    popt, pcov = curve_fit(gaussFit, x, y, p0=pinit, sigma=yler, absolute_sigma=True, bounds=([0, 0, 0, -np.inf, -np.inf], np.inf))
+    popt, pcov = curve_fit(gaussFit, x, y, p0=pinit, sigma=yler, absolute_sigma=True)
     print('\n',name)
     print('mu :', popt[0])
     print('sigma :', popt[1])
@@ -53,12 +53,11 @@ def getChannel(name: str, data: tuple, lower_limit: int, upper_limit: int, guess
     chmin = np.sum(((y - gaussFit(x, *popt)) / yler) ** 2)
     print('chi2:', chmin, ' ---> p:', ss.chi2.cdf(chmin, 4), '\n')
 
-    #plt.plot(x, y, color="r", label="data")
-    #plt.plot(xhelp, gaussFit(xhelp, *popt), 'k-.', label="gaussfit")
-    #plt.legend()
-
-    #plt.title(name)
-    #plt.show()
+    # plt.plot(x, y, color="r", label="data")
+    # plt.plot(xhelp, gaussFit(xhelp, *popt), 'k-.', label="gaussfit")
+    
+    # plt.title(str(popt[1]))
+    # plt.show()
 
     return [popt, perr]
 
@@ -101,11 +100,40 @@ expectations = abundances * 3/4 * detRad**2/rad**2 * sourceactivity
 expectationsUpper = (abundances+errAbund) * 3/4 * (detRad+detRadErr)**2/(rad-radErr)**2 * sourceactivity
 expectationsLower = (abundances-errAbund) * 3/4 * (detRad-detRadErr)**2/(rad+radErr)**2 * sourceactivity
 measured = chs[:, 0][:, 1] * chs[:, 0][:, 2] * np.sqrt(2*np.pi)/time
-plt.scatter(chs[:,0][:,0], measured/expectations, label='mean efficiency')
-plt.scatter(chs[:,0][:,0], measured/expectationsUpper, label='lower efficiency')
-plt.scatter(chs[:,0][:,0], measured/expectationsLower, label='upper efficiency')
+plt.scatter(chs[:,0][:,0], abs(measured/expectations), label='mean efficiency')
+plt.scatter(chs[:,0][:,0], abs(measured/expectationsUpper), label='lower efficiency')
+plt.scatter(chs[:,0][:,0], abs(measured/expectationsLower), label='upper efficiency')
 #plt.scatter(chs[:,1][:,0], expectations, label='expected')
 plt.legend()
 plt.show()
+print(measured/expectations)
 
+##%%
+
+def efficiency(E, a, b, c):
+    return a*E**(-b)+c
+
+## fit
+def fitEfficiency(data, pinit = [0.5, 0.0001, 0.5]):
+    x = data[0]
+    y = data[1]
+    yler = np.sqrt(y)
+    xhelp = np.linspace(min(x), 2500, 500)
+    popt, pcov = curve_fit(efficiency, x, y, p0=pinit, sigma=yler, absolute_sigma=True)
+    print('a :', popt[0])
+    print('b :', popt[1])
+    print('c :', popt[2])
+    perr = np.sqrt(np.diag(pcov))
+    print('usikkerheder:', perr)
+    chmin = np.sum(((y - efficiency(x, *popt)) / yler) ** 2)
+    print('chi2:', chmin, ' ---> p:', ss.chi2.cdf(chmin, 4), '\n')
+    plt.scatter(x, y, color="r", label="data")
+    plt.plot(xhelp, efficiency(xhelp, *popt), 'r.', label="gaussfit")
+    plt.plot(x, efficiency(x, *popt), 'k-.', label="gaussfit")
+    plt.title('Efficiency fit')
+    plt.show()
+    return [popt, perr]
+
+fitEfficiency([chs[:,0][:,0], abs(measured)/expectations], [1, 0.01, 10])
+    
 
