@@ -42,7 +42,7 @@ def getChannel(name: str, data: tuple, lower_limit: int, upper_limit: int, guess
     yler = np.sqrt(y)
     pinit = guess + guess2
     xhelp = np.linspace(lower_limit, upper_limit, 500)
-    popt, pcov = curve_fit(gaussFit, x, y, p0=pinit, sigma=yler, absolute_sigma=True, bounds=([0, 0, 0, -np.inf, -np.inf], np.inf))
+    popt, pcov = curve_fit(gaussFit, x, y, p0=pinit, sigma=yler, absolute_sigma=True)
     print('\n',name)
     print('mu :', popt[0])
     print('sigma :', popt[1])
