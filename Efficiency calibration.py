@@ -86,8 +86,8 @@ chs += [getChannel("Ra E=2204", data, 2204-50, 2204+50, [2204, 10, 100])]
 chs += [getChannel("Ra E=2447", data, 2447-100, 2447+100, [2447, 11, 20])]
 chs = np.array(chs)
 
-abundances = np.array([3.59, 7.43, 19.3, 37.6, 46.1, 4.94, 3.03, 15.1, 5.79, 4.00, 15.4, 5.08, 1.57])
-errAbund = np.array([0.06, 0.11, 0.2, 0.4, 0.5, 0.06, 0.04, 0.2, 0.08, 0.06, 0.2, 0.04, 0.2])
+abundances = np.array([3.59, 7.43, 19.3, 37.6, 46.1, 4.94, 3.03, 15.1, 5.79, 4.00, 15.4, 5.08, 1.57])/100
+errAbund = np.array([0.06, 0.11, 0.2, 0.4, 0.5, 0.06, 0.04, 0.2, 0.08, 0.06, 0.2, 0.04, 0.2])/100
 t1 = 776
 t2 = 1.37463282e+11
 time = (t2-t1)*10**(-8) #seconds
@@ -95,13 +95,15 @@ sourceactivitycurie = 4.8 #micro Ci
 sourceactivitycurieErr = 0.05
 #sourceativty in counts
 sourceactivity = sourceactivitycurie*3.7*10**4
-sourceactivityErr = sourceactivitycurieErr*10**4
+sourceactivityErr = sourceactivitycurieErr*3.7*10**4
 radc = 2.3 #cm
 radcErr = 0.3 #+-cm
 detRad = 7.8/2 #cm
 detRadErr = 0.5/2 #+-cm
 rad = np.sqrt(radc**2+detRad**2)
-radErr = 1/2*(np.sqrt((2*radcErr/radc*radc**2)**2 + (2*detRadErr/detRad*detRad**2))/(radc**2+detRad**2))*rad
+radErr = 1/2*rad*(np.sqrt((2*radcErr/radc*radc**2)**2 + (2*detRadErr/detRad*detRad**2)**2)
+                  /(radc**2+detRad**2))
+
 
 expectations = abundances * 1/4 * detRad**2/rad**2 * sourceactivity
 expectationserr = np.sqrt((errAbund/abundances)**2+((2*detRadErr/detRad)*detRad**2/detRad**2)**2+((2*radErr/rad)*rad**2/rad**2)**2+(sourceactivityErr/sourceactivity)**2)*1/4*expectations
@@ -109,6 +111,7 @@ expectationsUpper = (abundances+errAbund) * 1/4 * (detRad+detRadErr)**2/(rad-rad
 expectationsLower = (abundances-errAbund) * 1/4 * (detRad-detRadErr)**2/(rad+radErr)**2 * sourceactivity
 measured = chs[:, 0][:, 1] * chs[:, 0][:, 2] * np.sqrt(2*np.pi)/time
 measuredErr = np.sqrt((chs[:,1][:,1]/chs[:,0][:,1])**2+(chs[:,1][:,2]/chs[:,0][:,2])**2) * np.sqrt(2*np.pi)/time*measured
+#areaerror = sqrt(sigma
 efficiencies = measured/expectations
 efferr = np.sqrt((expectationserr/expectations)**2+(measuredErr/measured)**2)*efficiencies
 energies = chs[:,0][:,0]
@@ -154,7 +157,7 @@ perr1 = np.sqrt(np.diag(pcov1))
 print('usikkerheder:', perr1)
 chmin1 = np.sum(((efficiencies - reciproc(energies, *popt1)) / efferr) ** 2)
 print('chi2:', chmin1, ' ---> p:', ss.chi2.cdf(chmin1, 4), '\n')
-xhelp = np.linspace(chs[0][0][0], 2500, 100)
+xhelp = np.linspace(chs[0][0][0]-10, 2500, 100)
 plt.plot(xhelp, reciproc(xhelp, *popt1), label='reciprocal function fit')
 plt.title('fits for detector efficiency as function of energy')
 plt.xlabel('Energy (keV)')
@@ -162,9 +165,8 @@ plt.ylabel('Effeciency')
 plt.legend()
 plt.show()
 
-#efficiency fit
-#a : 180.66341379895778
-#b : 0.034598909761420625
-#usikkerheder: [6.52763544e+00 5.95806196e-03]
-#chi2: 0.9835314632319033  ---> p: 0.08771720843876844
-#Reciproc: a/x+b
+# efficiency fit
+#a : 0.2268636064383986
+#b : 4.380389222781053e-05
+#usikkerheder: [8.26845799e-03 7.70049304e-06]
+#chi2: 24.68507571767809  ---> p: 0.9999417974035777
