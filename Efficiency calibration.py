@@ -111,6 +111,7 @@ expectationsUpper = (abundances+errAbund) * 1/4 * (detRad+detRadErr)**2/(rad-rad
 expectationsLower = (abundances-errAbund) * 1/4 * (detRad-detRadErr)**2/(rad+radErr)**2 * sourceactivity
 measured = chs[:, 0][:, 1] * chs[:, 0][:, 2] * np.sqrt(2*np.pi)/time
 measuredErr = np.sqrt((chs[:,1][:,1]/chs[:,0][:,1])**2+(chs[:,1][:,2]/chs[:,0][:,2])**2) * np.sqrt(2*np.pi)/time*measured
+#areaerror = sqrt(sigma
 efficiencies = measured/expectations
 efferr = np.sqrt((expectationserr/expectations)**2+(measuredErr/measured)**2)*efficiencies
 energies = chs[:,0][:,0]
