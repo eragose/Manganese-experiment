@@ -52,13 +52,13 @@ def getChannel(name: str, data: tuple, lower_limit: int, upper_limit: int, guess
     print('usikkerheder:', perr)
     chmin = np.sum(((y - gaussFit(x, *popt)) / yler) ** 2)
     print('chi2:', chmin, ' ---> p:', ss.chi2.cdf(chmin, 4), '\n')
-    plt.plot(x, y, color="r", label="data")
-    plt.plot(xhelp, gaussFit(xhelp, *popt), 'k-.', label="gaussfit")
-    plt.legend()
-    plt.xlabel('Energy (keV)')
-    plt.ylabel('Counts')
-    plt.title(name)
-    plt.show()
+    # plt.plot(x, y, color="r", label="data")
+    # plt.plot(xhelp, gaussFit(xhelp, *popt), 'k-.', label="gaussfit")
+    # plt.legend()
+    # plt.xlabel('Energy (keV)')
+    # plt.ylabel('Counts')
+    # plt.title(name)
+    # plt.show()
 
     return [popt, perr]
 
