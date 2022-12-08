@@ -25,7 +25,7 @@ def converttoenergy(dat):
         else:
             newDat = np.append(newDat, [[a*dat[j, 0]+b, dat[j, 1]]], axis=0)
 
-    Ee = np.sqrt((ae*dat[:,0])**2 + be**2)*newDat[:,0]
+    Ee = np.sqrt((ae*dat[:,0])**2 + be**2)
     return newDat, Ee
 
 
@@ -62,9 +62,10 @@ def getChannel(name: str, data: tuple, lower_limit: int, upper_limit: int, guess
 
     return [popt, perr]
 
+
 data = np.transpose(data)
 data, Ee = converttoenergy(data)
-print(data)
+#print(data)
 data = data[np.where(data[:,0]>1)]
 data = data[np.where(data[:,0]<5000)]
 #plt.plot(data[:,0], data[:,1])
@@ -111,7 +112,7 @@ expectationsUpper = (abundances+errAbund) * 1/4 * (detRad+detRadErr)**2/(rad-rad
 expectationsLower = (abundances-errAbund) * 1/4 * (detRad-detRadErr)**2/(rad+radErr)**2 * sourceactivity
 measured = chs[:, 0][:, 1] * chs[:, 0][:, 2] * np.sqrt(2*np.pi)/time
 measuredErr = np.sqrt((chs[:,1][:,1]/chs[:,0][:,1])**2+(chs[:,1][:,2]/chs[:,0][:,2])**2) * np.sqrt(2*np.pi)/time*measured
-#areaerror = sqrt(sigma
+#areaerror = sqrt(sigmaerr/sigma)**2+(amperr/amp)**2)*sqrt(2*pi)*areal
 efficiencies = measured/expectations
 efferr = np.sqrt((expectationserr/expectations)**2+(measuredErr/measured)**2)*efficiencies
 energies = chs[:,0][:,0]
@@ -124,7 +125,7 @@ plt.scatter(energies, measured/expectationsLower, label='upper efficiency')
 plt.legend()
 plt.show()
 
-plt.errorbar(energies, efficiencies, yerr=efferr, xerr=energyerr, fmt='.', label='measured efficiencies')
+plt.errorbar(energies, efficiencies, yerr=efferr, xerr=energyerr, fmt=',', label='measured efficiencies')
 #plt.show()
 
 
@@ -137,7 +138,7 @@ def reciproc(x, a, b):
 
 
 popt, pcov = curve_fit(negexp, energies, efficiencies, p0=[1, 1, 0, 0], sigma=100*efferr)
-print('\n', 'efficiency fit')
+print('\n', 'exp fit')
 print('a :', popt[0])
 print('b :', popt[1])
 print('c', popt[2])
@@ -146,22 +147,42 @@ perr = np.sqrt(np.diag(pcov))
 print('usikkerheder:', perr)
 chmin = np.sum(((efficiencies - negexp(energies, *popt)) / efferr) ** 2)
 print('chi2:', chmin, ' ---> p:', ss.chi2.cdf(chmin, 4), '\n')
-xhelp = np.linspace(chs[0][0][0], 2500, 100)
+xhelp = np.linspace(chs[0][0][0]-10, 4000, 100)
 plt.plot(xhelp, negexp(xhelp, *popt), label='exponential function fit')
 
 popt1, pcov1 = curve_fit(reciproc, energies, efficiencies, p0=[1, 0], sigma=100*efferr)
-print('\n', 'efficiency fit')
+print('\n', 'rciproc fit')
 print('a :', popt1[0])
 print('b :', popt1[1])
 perr1 = np.sqrt(np.diag(pcov1))
 print('usikkerheder:', perr1)
 chmin1 = np.sum(((efficiencies - reciproc(energies, *popt1)) / efferr) ** 2)
 print('chi2:', chmin1, ' ---> p:', ss.chi2.cdf(chmin1, 4), '\n')
-xhelp = np.linspace(chs[0][0][0]-10, 2500, 100)
+
 plt.plot(xhelp, reciproc(xhelp, *popt1), label='reciprocal function fit')
+
+
+
+def power(x, a, b,c):
+    return a*x**b+c*0
+
+
+popt2, pcov2 = curve_fit(power, energies, efficiencies, p0=[1, -1, 0], sigma=100*efferr)
+print('\n', 'power fit')
+print('a :', popt2[0])
+print('b :', popt2[1])
+print('c :', popt2[2])
+perr2 = np.sqrt(np.diag(pcov2))
+print('usikkerheder:', perr2)
+chmin2 = np.sum(((efficiencies - power(energies, *popt2)) / efferr) ** 2)
+print('chi2:', chmin2, ' ---> p:', ss.chi2.cdf(chmin1, 4), '\n')
+
+plt.plot(xhelp, power(xhelp, *popt2), label='power function fit')
 plt.title('fits for detector efficiency as function of energy')
 plt.xlabel('Energy (keV)')
 plt.ylabel('Effeciency')
+plt.xscale('log')
+plt.yscale('log')
 plt.legend()
 plt.show()
 
@@ -170,3 +191,4 @@ plt.show()
 #b : 4.380389222781053e-05
 #usikkerheder: [8.26845799e-03 7.70049304e-06]
 #chi2: 24.68507571767809  ---> p: 0.9999417974035777
+realtiveUncertainty = efferr/efficiencies
