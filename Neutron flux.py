@@ -2,8 +2,9 @@ import numpy as np
 
 # equilibrium activity in detector
 
-
-ea = 1.20398380e+07*7.29575952e-05 #s^-1
+lamb = 7.29575952e-05
+n0 = 1.20398380e+07
+ea = n0*lamb  #s^-1
 eaErr = 7.21879660e+03
 
 radc = 2.4  # cm
