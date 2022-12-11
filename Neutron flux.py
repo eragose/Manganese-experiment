@@ -3,6 +3,7 @@ import numpy as np
 # equilibrium activity in detector
 
 lamb = 7.29575952e-05
+#lamb = 	np.log(2)/(2.5789*3600)
 n0 = 1.20398380e+07
 ea = n0*lamb  #s^-1
 eaErr = 7.21879660e+03

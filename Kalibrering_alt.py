@@ -37,7 +37,7 @@ def getCounts(name: str, lc: int = 20, hc: int = 6000):
     b = 0.3785
     be = 1.4e-3
     Line = (186-b)/a
-    plt.vlines(Line, 0, 100, colors='r', linestyles='dashed')
+    #plt.vlines(Line, 0, 100, colors='r', linestyles='dashed')
     plt.show()
     return (x, y)
 
@@ -108,6 +108,7 @@ for i in chs:
     xler = np.append(xler, [i[1][0]])
 
 y = [661.657, 1173.228, 1332.492, 186.211, 241.997, 295.224, 351.932, 609.312, 768.356, 934.061, 1120.287, 1238.110, 1377.669, 1407.98, 1729.595, 1764.494, 1847.420, 2118.55, 2204.21, 2447.86] #KeV
+y = np.array(y)
 yler = [0.003, 0.003, 0.003, 0.013, 0.003, 0.002, 0.002, 0.007, 0.01, 0.012, 0.01, 0.012, 0.012, 0.04, 0.015, 0.014, 0.025, 0.003, 0.004, 0.01]
 #xler =[10, 10, 10]
 def funlin(x, a, b):
@@ -125,10 +126,14 @@ print('usikkerheder:', perr, "\n")
 #print(x)
 chmin = np.sum(((y - funlin(x, *popt)) / yler) ** 2)
 print('chi2:', chmin, ' ---> p:', ss.chi2.cdf(chmin, 4))
-plt.scatter(x, y, label="data")
+
 plt.plot(xhelp, funlin(xhelp, *popt), label="fit")
+plt.errorbar(x, y, label="data", fmt='.')
 plt.legend()
-#plt.show()
+plt.xlabel('Channel')
+plt.ylabel('Energy')
+plt.title('Energy calibration')
+plt.show()
 
 print("xler: ", xler)
 

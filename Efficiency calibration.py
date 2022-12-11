@@ -102,7 +102,7 @@ radcErr = 0.3 #+-cm
 detRad = 7.8/2 #cm
 detRadErr = 0.5/2 #+-cm
 rad = np.sqrt(radc**2+detRad**2)
-radErr = 1/2*rad*(np.sqrt((2*radcErr/radc*radc**2)**2 + (2*detRadErr/detRad*detRad**2)**2)
+radErr = 1/2*rad*(np.sqrt((2*radcErr/radc*radc**2)**2 + np.sqrt(2*detRadErr/detRad*detRad**2)**2)
                   /(radc**2+detRad**2))
 
 
@@ -164,7 +164,7 @@ plt.plot(xhelp, reciproc(xhelp, *popt1), label='reciprocal function fit')
 
 
 def power(x, a, b,c):
-    return a*x**b+c*0
+    return a*x**b+c
 
 
 popt2, pcov2 = curve_fit(power, energies, efficiencies, p0=[1, -1, 0], sigma=100*efferr)
